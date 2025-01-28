@@ -1,0 +1,38 @@
+<%= link_to products_path, class: "btn btn-white mb-3" do %>
+  <span class="material-symbols-outlined">
+    arrow_back
+  </span>
+<% end %>
+
+<section class="product">
+  <div class="card container">
+    <div class="row g-0">
+      <!-- Coluna para a imagem do produto -->
+      <div class="col-12 col-md-4">
+        <%= image_tag @product.featured_image, class: "img-fluid rounded-start" if @product.featured_image.attached? %>
+      </div>
+
+      <!-- Coluna para as informações do produto -->
+      <div class="col-12 col-md-8">
+        <% cache @product do %>
+          <div class="card-body">
+            <h5 class="card-title"><%= @product.name %></h5>
+            <p class="card-text"><%= @product.description %></p>
+            <p class="card-text"><small class="text-body-primary">Estoque: <%= @product.inventory_count %></small></p>
+            <p class="card-text"><small class="text-body-secondary">Cadastrado em: <%= @product.created_at.strftime('%d/%m/%Y %H:%M:%S') %></small></p>
+            <p class="card-text"><small class="text-body-secondary">Atualizado em: <%= @product.updated_at.strftime('%d/%m/%Y %H:%M:%S') %></small></p>
+          </div>
+        <% end %>
+
+        <% if authenticated? %>
+           <div class="card-body">
+            <div class="btn-group" role="group">
+              <%= button_to "Edit", edit_product_path(@product), class: "btn btn-secondary", method: :get %>
+              <%= button_to "Delete", @product, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</section>

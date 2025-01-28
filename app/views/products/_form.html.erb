@@ -1,0 +1,41 @@
+<div class="container mb-5">
+  <%= form_with model: product do |form| %>
+    <div class="mb-3">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+
+    <div class="mb-3">
+      <%= form.label :inventory_count, class: "form-label" %>
+      <%= form.number_field :inventory_count, class: "form-control" %>
+    </div>
+
+    <div class="row">
+
+      <!-- Coluna para estoque -->
+      <div class="col-12 col-md-8 col-sm-12 mb-3">
+        <%= form.label :description, class: "form-label" %>
+        <%= form.rich_text_area :description, class: "form-control" %>
+      </div>
+
+      <!-- Coluna para imagem -->
+      <div class="col-12 col-md-4 col-sm-12 mb-3">
+        <%= form.label :featured_image, class: "form-label" do%>
+          <%= image_tag product.featured_image , class: 'img-fluid img-thumbnail' if product.featured_image.attached? %>
+        <% end%>
+        <%= form.file_field :featured_image, class: "form-control", accept: "image/*" %>
+      </div>
+
+      <!-- Coluna para botões -->
+      <div class="col-12 d-flex justify-content-between mt-3 mb-5">
+        <%= button_to "Delete", @product, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "btn btn-danger" %>
+
+        <div class="col-12 d-flex justify-content-end">
+          <%= link_to "Cancel", @product, class: "btn btn-light" %>
+          <%= form.submit class: "btn btn-success" %>
+        </div>
+      </div>
+
+    </div>
+  <% end %>
+</div>
